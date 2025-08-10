@@ -1,0 +1,11 @@
+[package]
+name = "pyby"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rustpython-vm = { path = "../RustPython/vm", features = ["freeze-stdlib", "importlib"] }
+rustpython-pylib = { path = "../RustPython/pylib", features = ["freeze-stdlib"] }
+rustpython-stdlib = { path = "../RustPython/stdlib", features = ["ssl-vendor", "compiler"]  }
+rustpython-derive = { path = "../RustPython/derive"  }
+rustpython-compiler-core = { path = "../RustPython/compiler/core"  }
