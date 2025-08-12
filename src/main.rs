@@ -22,6 +22,7 @@ fn main() -> ExitCode {
 
     let interp = vm::Interpreter::with_init(settings, |vm| {
 	vm.add_frozen(rustpython_pylib::FROZEN_STDLIB);
+	vm.add_native_modules(rustpython_stdlib::get_module_inits());
 	let pyby_frozen = rustpython_derive::py_freeze!(dir = "./python", crate_name = "rustpython_compiler_core");
 	vm.add_frozen(pyby_frozen);
     });
