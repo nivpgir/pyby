@@ -1,10 +1,32 @@
 import httpimport
+import sys
+import os
 
-url = "https://gist.githubusercontent.com/operatorequals/ee5049677e7bbc97af2941d1d3f04ace/raw/e55fa867d3fb350f70b2897bb415f410027dd7e4"
 
-with httpimport.remote_repo(url):
-  import hello
-hello.hello()
+def import_remote(module_url):
+    with httpimport.remote_repno(module_url):
+        import hello
+    hello.hello()
 
-mod = httpimport.load('hello', url=url)
-mod.hello()
+    mod = httpimport.load('hello', url=module_url)
+    mod.hello()
+
+def get_httpimport_logger():
+    import logging
+    return logging.getLogger("httpimport")
+
+def set_httpimport_log_level_from_env():
+    new_level = os.environ.get(
+        "HTTPIMPORT_LOGLEVEL",
+        "WARNING"
+    )
+    new_level = "DEBUG" if "-v" in sys.argv else new_level
+    set_httpimport_log_level(new_level)
+
+def set_httpimport_log_level(new_level):
+    logger = get_httpimport_logger()
+    logger.setLevel(new_level)
+    for h in logger.handlers:
+        h.setLevel(new_level)
+
+set_httpimport_log_level_from_env()
