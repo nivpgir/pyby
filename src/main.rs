@@ -18,7 +18,8 @@ fn run(vm: &vm::VirtualMachine) -> vm::PyResult<()> {
 }
 fn main() -> ExitCode {
     // Add standard library path
-    let settings = vm::Settings::default();
+    let mut settings = vm::Settings::default();
+    settings.argv = std::env::args().into_iter().collect();
 
     let interp = vm::Interpreter::with_init(settings, |vm| {
 	vm.add_frozen(rustpython_pylib::FROZEN_STDLIB);
